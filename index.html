@@ -3,62 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Message</title>
-    <style>
-        body { font-family: 'Courier New', Courier, monospace; background-color: #ffebee; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
-        #game-container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 90%; position: relative; }
-        h1 { color: #d32f2f; font-size: 1.5rem; }
-        .btn-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; position: relative; height: 50px; }
-        button { padding: 10px 25px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; transition: transform 0.2s; }
-        #yes-btn { background-color: #4caf50; color: white; }
-        #no-btn { background-color: #f44336; color: white; position: absolute; }
-        .hidden { display: none; }
-    </style>
+    <title>Game</title>
 </head>
 <body>
-
-<div id="game-container">
-    <div id="scene">
-        <h1 id="text">I've been debugging my life, and I realized there's one thing missing...</h1>
-        <div class="btn-container">
-            <button id="yes-btn" onclick="nextScene()">What is it?</button>
-            <button id="no-btn" onmouseover="moveButton()" onclick="moveButton()">Not interested</button>
+    <h1>Questions</h1>
+    <div id="question-container">
+        <div id="current-question">
+            <p>Is this your final answer?</p>
+            <button id="yes-button">Yes</button>
+            <button id="no-button">No</button>
+            <div id="remarks" style="display: none; color: red;"></div>
         </div>
     </div>
-</div>
 
-<script>
-    let currentStep = 0;
-    const scenes = [
-        { text: "It's a permanent partner for all my future projects. Will you be my 'Main' function?", btn: "Yes!" },
-        { text: "Error 404: Life without you not found. Will you make me the happiest dev today?", btn: "Click to Propose" },
-        { text: "💖 Happy Propose Day! 💖<br>I love you!", btn: "Restart?" }
-    ];
-
-    const textElement = document.getElementById('text');
-    const yesBtn = document.getElementById('yes-btn');
-    const noBtn = document.getElementById('no-btn');
-
-    function nextScene() {
-        if (currentStep < scenes.length) {
-            textElement.innerHTML = scenes[currentStep].text;
-            yesBtn.innerHTML = scenes[currentStep].btn;
-            currentStep++;
-            // Hide "No" button on the final success screen
-            if (currentStep === scenes.length) noBtn.style.display = 'none';
-        } else {
-            location.reload();
-        }
-    }
-
-    function moveButton() {
-        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-        noBtn.style.left = `${x}px`;
-        noBtn.style.top = `${y}px`;
-        noBtn.style.position = 'fixed';
-    }
-</script>
-
+    <script>
+        document.getElementById('no-button').addEventListener('click', function() {
+            var remarks = document.getElementById('remarks');
+            remarks.innerText = 'Please reconsider your answer.';
+            remarks.style.display = 'block';
+        });
+    </script>
 </body>
 </html>
