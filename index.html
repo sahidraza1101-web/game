@@ -3,38 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game</title>
+    <title>A Special Message</title>
+    <style>
+        body { font-family: 'Courier New', Courier, monospace; background-color: #ffebee; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        #game-container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 90%; position: relative; }
+        h1 { color: #d32f2f; font-size: 1.5rem; }
+        .remark { color: #ff6f00; font-size: 0.9rem; margin-bottom: 15px; font-style: italic; min-height: 20px; }
+        .btn-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; position: relative; height: 50px; }
+        button { padding: 10px 25px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; transition: transform 0.2s; }
+        #yes-btn { background-color: #4caf50; color: white; }
+        #no-btn { background-color: #f44336; color: white; }
+        .hidden { display: none; }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Game!</h1>
-    <button id="noButton">No</button>
-    <p id="remarks"></p>
 
-    <script>
-        const remarks = [
-            'Not today!',
-            'Maybe next time!',
-            'Definitely not!',
-            'A hard pass!',
-            'No way!',
-            'That’s a negative!',
-            'Not in this lifetime!',
-            'Not gonna happen!',
-            'I’ll decline!',
-            'Not interested!',
-            'Perhaps not!',
-            'I think I’ll pass!',
-            'I can’t agree!',
-            'Nope!',
-            'I would rather not!',
-            'Thanks, but no thanks!'
-        ];
+<div id="game-container">
+    <div id="scene">
+        <div class="remark" id="remark"></div>
+        <h1 id="text">I've been debugging my life, and I realized there's one thing missing...</h1>
+        <div class="btn-container">
+            <button id="yes-btn" onclick="nextScene()">What is it?</button>
+            <button id="no-btn" onclick="handleNo()">Not interested</button>
+        </div>
+    </div>
+</div>
 
-        document.getElementById('noButton').addEventListener('click', function() {
-            const shuffledRemarks = remarks.sort(() => 0.5 - Math.random());
-            const randomRemark = shuffledRemarks[0];
-            document.getElementById('remarks').innerText = randomRemark;
-        });
-    </script>
+<script>
+    let currentStep = 0;
+    const allRemarks = [
+        "Come on, think about it 🤔",
+        "Really? 😢",
+        "Don't be shy... 👉👈",
+        "Last chance to reconsider! 💭",
+        "I believe in you! 💪",
+        "Are you sure? 🥺",
+        "Think twice! 💔",
+        "You might regret this... 😔",
+        "Give it another thought! 🌟",
+        "C'mon, just say yes! 🙌",
+        "What if I say please? 🥺",
+        "I promise it'll be worth it! ✨",
+        "Not even a little bit curious? 😉",
+        "Your loss! 😭",
+        "I knew you'd come around! 😊",
+        "Okay, okay, one more chance! 🎁"
+    ];
+    
+    let usedRemarks = [];
+
+    const scenes = [
+        { text: "It's a permanent partner for all my future projects. Will you be my 'Main' function?", btn: "Yes!" },
+        { text: "Error 404: Life without you not found. Will you make me the happiest dev today?", btn: "Click to Propose" },
+        { text: "💖 Happy Propose Day! 💖<br>I love you!", btn: "Restart?" }
+    ];
+
+    const textElement = document.getElementById('text');
+    const yesBtn = document.getElementById('yes-btn');
+    const noBtn = document.getElementById('no-btn');
+    const remarkElement = document.getElementById('remark');
+
+    function getRandomRemark() {
+        if (usedRemarks.length === allRemarks.length) {
+            usedRemarks = [];
+        }
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * allRemarks.length);
+        } while (usedRemarks.includes(randomIndex));
+        usedRemarks.push(randomIndex);
+        return allRemarks[randomIndex];
+    }
+
+    function nextScene() {
+        usedRemarks = [];
+        remarkElement.textContent = '';
+        if (currentStep < scenes.length) {
+            textElement.innerHTML = scenes[currentStep].text;
+            yesBtn.innerHTML = scenes[currentStep].btn;
+            currentStep++;
+            // Hide "No" button on the final success screen
+            if (currentStep === scenes.length) noBtn.style.display = 'none';
+        } else {
+            location.reload();
+        }
+    }
+
+    function handleNo() {
+        const remark = getRandomRemark();
+        remarkElement.textContent = remark;
+    }
+
+</script>
+
 </body>
 </html>
