@@ -1,52 +1,68 @@
-const scenes = [
-    {
-        question: 'What is the best way to express love?',
-        options: [
-            'Through words',
-            'By cooking a meal',
-            'By buying gifts',
-            'Ignoring the person'
-        ],
-        answer: 'Through words'
-    },
-    {
-        question: 'Which flower is often associated with love?',
-        options: [
-            'Daisy',
-            'Rose',
-            'Tulip',
-            'Sunflower'
-        ],
-        answer: 'Rose'
-    },
-    {
-        question: 'What is a classic romantic movie?',
-        options: [
-            'Die Hard',
-            'The Notebook',
-            'Fast and Furious',
-            'Avatar'
-        ],
-        answer: 'The Notebook'
-    },
-    {
-        question: 'Where is the most romantic place to propose?',
-        options: [
-            'At a football game',
-            'On a beach sunset',
-            'In a crowded restaurant',
-            'At work'
-        ],
-        answer: 'On a beach sunset'
-    },
-    {
-        question: 'What is a popular romantic dinner?',
-        options: [
-            'Pizza',
-            'Sushi',
-            'Steak',
-            'Hot dogs'
-        ],
-        answer: 'Steak'
-    }
-];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        #proposal {
+            display: none;
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz Game</h1>
+        <div id="question"></div>
+        <div id="options"></div>
+        <div id="proposal"></div>
+    </div>
+    <script>
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const proposalElement = document.getElementById('proposal');
+
+        const question = "What is the capital of France?";
+        const answers = ["Madrid", "Berlin", "Paris", "Lisbon"];
+
+        function displayQuestion() {
+            questionElement.innerHTML = question;
+            const randomizedAnswers = answers.sort(() => 0.5 - Math.random());
+            randomizedAnswers.forEach(answer => {
+                const button = document.createElement('button');
+                button.innerText = answer;
+                button.onclick = () => checkAnswer(answer);
+                optionsElement.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedAnswer) {
+            if (selectedAnswer === "Paris") {
+                proposalElement.innerText = "Congratulations! You've chosen the correct answer! Here’s a beautiful proposal for you!";
+                proposalElement.style.display = 'block';
+                optionsElement.innerHTML = ''; // Clear options after the correct answer
+            } else {
+                proposalElement.innerText = "Wrong answer! Try again!";
+                proposalElement.style.display = 'block';
+            }
+        }
+
+        displayQuestion();
+    </script>
+</body>
+</html>
